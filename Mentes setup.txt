@@ -1,0 +1,27 @@
+Automatizált mentés beállításhoz CRON szükséges
+bash autosave.sh
+
+
+#!/bin/bash
+eredeti='pwd'
+cd /var/www/services
+sudo chown -R silver:www-data ../services; sudo chmod -R 775 ../services
+cd $eredeti
+
+FILE_TO_BACKUP="/var/www/services"
+
+BACKUP_DIR="home/mentes"
+
+CURRENT_DATE=$(date +"%Y_%m_%d")
+
+NEW_BACKUP_DIR="${CURRENT_DATE}"
+
+if [ ! -d "$NEW_BACKUP_DIR" ]; then
+  mkdir -p "$NEW_BACKUP_DIR"
+fi
+
+cp -R "$FILE_TO_BACKUP" "$NEW_BACKUP_DIR"
+
+echo "Backup of $FILE_TO_BACKUP completed successfully to $NEW_BACKUP_DIR"
+
+rsync -avuP /home/mentes/$NEW_BACKUP_DIR mentes@172.16.11.196:/home/mentes/
