@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=mytouchpad
+Comment=Rotate touchpad script
+Exec=/home/user/.config/mytouchpad.sh
